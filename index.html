@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Enfrentamientos</title>
+    <!-- CSS para DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .selector-group {
+            margin: 10px 0;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="text"], select {
+            width: 80px;
+            text-align: center;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #resultado span {
+            display: inline-block;
+            margin: 5px;
+        }
+        /* Estilos responsive */
+        @media screen and (max-width: 600px) {
+            #resultado span {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulador de Enfrentamientos</h1>
+    <div class="selector-group">
+        <label for="HPJ1">Habilidad PJ1 (número de dados):</label>
+        <select id="HPJ1">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <label for="BPJ1">Bonificador PJ1:</label>
+        <select id="BPJ1">
+            <option value="0">0</option>
+            <option value="1">+1</option>
+            <option value="2">+2</option>
+            <option value="4">+4</option>
+            <option value="6">+6</option>
+        </select>
+        <label for="dificultad">Dificultad:</label>
+        <select id="dificultad">
+            <!-- Valores del 5 al 25 -->
+            <script>
+                for (let i = 5; i <= 25; i++) {
+                    document.write(`<option value="${i}">${i}</option>`);
+                }
+            </script>
+        </select>
+    </div>
+    <div class="selector-group">
+        <label for="numSimulaciones">Número de Simulaciones:</label>
+        <select id="numSimulaciones">
+            <option value="1">1</option>
+            <option value="10">10</option>
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+        </select>
+    </div>
+    <button onclick="simularEnfrentamientos()">Simular Enfrentamientos</button>
+    <div id="resultado">
+        <span><strong>Éxitos:</strong> <span id="totalExitos">0</span></span>
+        <span><strong>Fracasos:</strong> <span id="totalFracasos">0</span></span>
+        <span><strong>Críticos:</strong> <span id="totalCriticos">0</span></span>
+        <span><strong>Pifias:</strong> <span id="totalPifias">0</span></span>
+        <span><strong>Media de Éxitos (%):</strong> <span id="mediaExitos">0%</span></span>
+        <span><strong>Media de Fallos (%):</strong> <span id="mediaFallos">0%</span></span>
+    </div>
+    <table id="tablaResultados" class="display" style="width: 100%; margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>Dado 1</th>
+                <th>Dado 2</th>
+                <th>Dado 3</th>
+                <th>Bonificador por Atributo</th>
+                <th>Resultado PJ1</th>
+                <th>Dificultad</th>
+                <th>Resultado Final</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <!-- Scripts para DataTables y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        // Configuración inicial de la tabla DataTables
+        $(document).ready(function () {
+            $('#tablaResultados').DataTable();
+        });
+
+        function simularEnfrentamientos() {
+            // Obtener valores seleccionados
+            const habilidadPJ1 = parseInt(document.getElementById("HPJ1").value);
+            const bonificadorPJ1 = parseInt(document.getElementById("BPJ1").value);
+            const dificultad = parseInt(document.getElementById("dificultad").value);
+            const numSimulaciones = parseInt(document.getElementById("numSimulaciones").value);
+
+            // Calcular resultados y actualizar la tabla
+            const tabla = $('#tablaResultados').DataTable();
+            tabla.clear(); // Limpiar datos previos
+
+            let exitos = 0, fracasos = 0, criticos = 0, pifias = 0;
+
+            for (let i = 0; i < numSimulaciones; i++) {
+                // Tiradas de dados (hasta 3 dados)
+                const dados = [];
+                for (let j = 0; j < habilidadPJ1; j++) {
+                    dados.push(Math.floor(Math.random() * 6) + 1); // Dado de 6 caras
+                }
+
+                // Rellenar dados no utilizados con "-"
+                while (dados.length < 3) {
+                    dados.push("-");
+                }
+
+                // Calcular resultado final
+                const sumaDados = dados.reduce((total, valor) => (valor !== "-" ? total + valor : total), 0);
+                const resultadoPJ1 = sumaDados + bonificadorPJ1;
+
+                // Determinar si es crítico o pifia
+                const seises = dados.filter(d => d === 6).length;
+                const unos = dados.filter(d => d === 1).length;
+                let resultadoFinal = "Fallo";
+
+                if (seises >= 2) {
+                    resultadoFinal = "Crítico";
+                    criticos++;
+                    exitos++; // Los críticos son éxitos
+                } else if (unos === habilidadPJ1) {
+                    resultadoFinal = "Pifia";
+                    pifias++;
+                    fracasos++; // Las pifias son fallos
+                } else if (resultadoPJ1 >= dificultad) {
+                    resultadoFinal = "Éxito";
+                    exitos++;
+                } else {
+                    fracasos++;
+                }
+
+                // Añadir datos a la tabla
+                tabla.row.add([
+                    dados[0],
+                    dados[1],
+                    dados[2],
+                    bonificadorPJ1,
+                    resultadoPJ1,
+                    dificultad,
+                    resultadoFinal
+                ]);
+            }
+
+            tabla.draw(); // Actualizar la tabla
+
+            // Calcular porcentajes
+            const porcentajeExitos = ((exitos / numSimulaciones) * 100).toFixed(2);
+            const porcentajeFallos = ((fracasos / numSimulaciones) * 100).toFixed(2);
+
+            // Actualizar contadores
+            document.getElementById("totalExitos").textContent = exitos;
+            document.getElementById("totalFracasos").textContent = fracasos;
+            document.getElementById("totalCriticos").textContent = criticos;
+            document.getElementById("totalPifias").textContent = pifias;
+            document.getElementById("mediaExitos").textContent = `${porcentajeExitos}%`;
+            document.getElementById("mediaFallos").textContent = `${porcentajeFallos}%`;
+        }
+    </script>
+</body>
+</html>
