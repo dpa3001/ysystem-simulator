@@ -9,17 +9,34 @@
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Reset y configuraciones base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --background: #333;
+            --text-color: #fff;
+            --card-background: #444;
+            --button-background: #555;
+            --button-hover: #777;
+            --toggle-background: #555;
+            --toggle-checked: #777;
+            --table-header: #555;
+            --border-color: #555;
+        }
+
+        body.light {
+            --background: #f4f4f4;
+            --text-color: #000;
+            --card-background: #fff;
+            --button-background: #ddd;
+            --button-hover: #bbb;
+            --toggle-background: #ddd;
+            --toggle-checked: #bbb;
+            --table-header: #ddd;
+            --border-color: #ccc;
         }
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #333;
-            color: #fff;
+            background-color: var(--background);
+            color: var(--text-color);
             padding: 10px;
         }
 
@@ -37,7 +54,7 @@
 
         header h1 {
             font-size: 1.8rem;
-            color: #fff;
+            color: var(--text-color);
             margin-bottom: 10px;
             font-weight: bold;
         }
@@ -52,6 +69,26 @@
             padding: 0 20px;
         }
 
+        /* Botón de Modo Claro/Oscuro */
+        #toggleTheme {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--button-background);
+            color: var(--text-color);
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        #toggleTheme:hover {
+            background-color: var(--button-hover);
+        }
+
         /* Estilos para los selectores */
         .selector-group {
             display: flex;
@@ -64,7 +101,7 @@
         .selector-group label {
             font-size: 1rem;
             font-weight: bold;
-            color: #ccc;
+            color: var(--text-color);
             display: flex;
             align-items: center;
             gap: 5px;
@@ -73,11 +110,12 @@
         .selector-group select {
             padding: 10px;
             font-size: 1rem;
-            border: 1px solid #555;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
-            background-color: #444;
-            color: #fff;
+            background-color: var(--card-background);
+            color: var(--text-color);
             width: auto;
+            text-align: center;
         }
 
         button {
@@ -85,15 +123,61 @@
             font-size: 1.2rem;
             cursor: pointer;
             border: none;
-            background-color: #555;
-            color: #fff;
+            background-color: var(--button-background);
+            color: var(--text-color);
             border-radius: 5px;
             font-weight: bold;
             transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #777;
+            background-color: var(--button-hover);
+        }
+
+        /* Estilos para el toggle */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--toggle-background);
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--toggle-checked);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
         /* Resultados */
@@ -113,11 +197,11 @@
             align-items: center;
             gap: 5px;
             padding: 10px;
-            border: 1px solid #555;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             font-size: 1rem;
-            background-color: #444;
-            color: #fff;
+            background-color: var(--card-background);
+            color: var(--text-color);
             min-width: 120px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
         }
@@ -127,8 +211,8 @@
             margin-top: 20px;
             border-collapse: collapse;
             overflow-x: auto;
-            background-color: #444;
-            color: #fff;
+            background-color: var(--card-background);
+            color: var(--text-color);
             border-radius: 5px;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
         }
@@ -136,55 +220,17 @@
         th, td {
             padding: 10px;
             text-align: center;
-            border: 1px solid #555;
+            border: 1px solid var(--border-color);
         }
 
         th {
-            background-color: #555;
-            color: #fff;
+            background-color: var(--table-header);
+            color: var(--text-color);
             font-size: 1rem;
         }
 
         td {
             font-size: 0.9rem;
-        }
-
-        /* Estilos responsive */
-        @media screen and (min-width: 1200px) {
-            .container {
-                max-width: 100%;
-                padding: 0 40px;
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            .selector-group {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .selector-group label {
-                font-size: 0.9rem;
-            }
-
-            .selector-group select {
-                font-size: 0.9rem;
-                width: 100%;
-            }
-
-            #resultado span {
-                flex: 1 1 100%;
-                min-width: unset;
-            }
-
-            button {
-                width: 100%;
-                font-size: 1rem;
-            }
-
-            th, td {
-                font-size: 0.8rem;
-            }
         }
     </style>
 </head>
@@ -192,6 +238,7 @@
     <header>
         <img src="https://walhallaediciones.com/wp-content/uploads/2021/01/noticia_ysystem.jpg" alt="Logo de YSystem">
         <h1>Simulador de Enfrentamientos</h1>
+        <button id="toggleTheme">Modo Claro</button>
     </header>
     <div class="container">
         <div class="selector-group">
@@ -238,6 +285,13 @@
             </select>
         </div>
         <button onclick="simularEnfrentamientos()">Simular Enfrentamientos</button>
+        <div id="toggleTablaContainer">
+            <span>Mostrar/Ocultar Tabla</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggleTabla" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
         <div id="resultado">
             <span><strong>Éxitos:</strong> <span id="totalExitos">0</span></span>
             <span><strong>Fracasos:</strong> <span id="totalFracasos">0</span></span>
@@ -246,29 +300,40 @@
             <span><strong>Media de Éxitos (%):</strong> <span id="mediaExitos">0%</span></span>
             <span><strong>Media de Fallos (%):</strong> <span id="mediaFallos">0%</span></span>
         </div>
-        <table id="tablaResultados" class="display">
-            <thead>
-                <tr>
-                    <th>Dado 1</th>
-                    <th>Dado 2</th>
-                    <th>Dado 3</th>
-                    <th>Bonificador por Atributo</th>
-                    <th>Resultado PJ1</th>
-                    <th>Dificultad</th>
-                    <th>Resultado Final</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div id="tablaContainer">
+            <table id="tablaResultados" class="display">
+                <thead>
+                    <tr>
+                        <th>Dado 1</th>
+                        <th>Dado 2</th>
+                        <th>Dado 3</th>
+                        <th>Bonificador por Atributo</th>
+                        <th>Resultado PJ1</th>
+                        <th>Dificultad</th>
+                        <th>Resultado Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Scripts para DataTables y jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script>
+        document.getElementById('toggleTheme').addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const isLightMode = document.body.classList.contains('light');
+            document.getElementById('toggleTheme').textContent = isLightMode ? 'Modo Oscuro' : 'Modo Claro';
+        });
+
         $(document).ready(function () {
             $('#tablaResultados').DataTable();
+            $('#toggleTabla').on('change', function () {
+                $('#tablaContainer').toggle(this.checked);
+            });
         });
 
         function simularEnfrentamientos() {
