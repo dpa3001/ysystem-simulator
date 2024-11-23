@@ -19,6 +19,7 @@
             --toggle-checked: #777;
             --table-header: #555;
             --border-color: #555;
+            --dice-icon-color: #fff;
         }
 
         body.light {
@@ -31,6 +32,7 @@
             --toggle-checked: #bbb;
             --table-header: #ddd;
             --border-color: #ccc;
+            --dice-icon-color: #000;
         }
 
         body {
@@ -135,11 +137,20 @@
         }
 
         /* Estilos para el toggle */
+        #toggleTablaContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 1rem; /* Ajusta el tamaño del texto */
+        }
+
         .toggle-switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 40px; /* Tamaño reducido */
+            height: 20px; /* Tamaño reducido */
         }
 
         .toggle-switch input {
@@ -157,16 +168,16 @@
             bottom: 0;
             background-color: var(--toggle-background);
             transition: 0.4s;
-            border-radius: 34px;
+            border-radius: 20px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
+            height: 14px; /* Tamaño reducido */
+            width: 14px; /* Tamaño reducido */
+            left: 3px;
+            bottom: 3px;
             background-color: white;
             transition: 0.4s;
             border-radius: 50%;
@@ -177,7 +188,7 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(20px); /* Ajustado para el nuevo tamaño */
         }
 
         /* Resultados */
@@ -304,9 +315,9 @@
             <table id="tablaResultados" class="display">
                 <thead>
                     <tr>
-                        <th>Dado 1</th>
-                        <th>Dado 2</th>
-                        <th>Dado 3</th>
+                        <th><i class="fas fa-dice dice-icon"></i> 1</th>
+                        <th><i class="fas fa-dice dice-icon"></i> 2</th>
+                        <th><i class="fas fa-dice dice-icon"></i> 3</th>
                         <th>Bonificador por Atributo</th>
                         <th>Resultado PJ1</th>
                         <th>Dificultad</th>
