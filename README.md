@@ -94,6 +94,20 @@ Tu colaboración ayudará a mejorar esta herramienta y a expandir las posibilida
 
 Si necesitas algún ajuste o complemento, házmelo saber. 😊
 
+---
 
+## Licencia
 
+Este proyecto es una herramienta complementaria diseñada para facilitar el uso del sistema genérico **YSystem**, desarrollado por Daniel Palacios Alonso. El simulador se ofrece de manera gratuita para fines educativos y recreativos, respetando los derechos de propiedad intelectual del sistema **Creative Commons BY-NC-ND 4.0**.
 
+### Condiciones de Uso
+- **Fines permitidos**: Puedes utilizar el simulador para actividades relacionadas con la enseñanza, aprendizaje o recreación.
+- **Prohibiciones**: No se permite el uso del simulador con fines comerciales o de lucro sin previa autorización.
+
+### Atribución
+Si utilizas este simulador o partes de su código en tus proyectos, es importante incluir una mención a **Daniel Palacios Alonso** y un enlace al sistema oficial [YSystem](https://walhallaediciones.gitlab.io/ysystem/).
+
+### Propiedad Intelectual
+Las mecánicas, conceptos y elementos del sistema **YSystem** son propiedad intelectual de **Walhalla Ediciones**. Este simulador no sustituye ni reemplaza la documentación oficial ni los productos ofrecidos por la editorial.
+
+Para más detalles sobre los términos de uso de **YSystem**, consulta su [documentación oficial](https://walhallaediciones.gitlab.io/ysystem/).
