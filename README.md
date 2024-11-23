@@ -38,3 +38,61 @@ Para usar este proyecto no se necesita instalación adicional, solo un navegador
 ├── index.html        # Página principal del simulador
 ├── README.md         # Este archivo
 ├── /assets           # (Opcional) Carpeta para almacenar imágenes o recursos personalizados
+
+---
+
+## Cómo Usarlo
+
+1. **Abrir el Simulador**:
+
+2. **Configurar las Tiradas**:
+   - Selecciona:
+     - Número de dados de **Habilidad PJ1** (1, 2 o 3).
+     - **Bonificador PJ1** correspondiente al atributo relacionado con la habilidad del personaje (0, +1, +2, +4 o +6).
+     - **Dificultad** del enfrentamiento (entre 5 y 25).
+
+3. **Resultados**:
+   - **Tabla**: Visualiza los resultados de cada tirada en una tabla interactiva (incluye tiradas de dados, bonificadores, dificultad y el resultado final).
+   - **Resumen**: Consulta los datos acumulativos de las simulaciones (éxitos, fracasos, críticos y pifias).
+
+---
+
+## Contribuciones
+
+¡Tu participación es bienvenida! Si deseas colaborar en el desarrollo del simulador de tiradas para el sistema genérico **YSystem**, sigue estos pasos:
+
+1. Haz un **fork** del repositorio para crear una copia en tu cuenta.
+2. Crea una nueva rama en tu repositorio local para los cambios que deseas realizar:
+   ```bash
+   git checkout -b nombre-de-tu-rama
+3. Realiza las modificaciones o añade nuevas funcionalidades.
+4. Prueba tus cambios para asegurarte de que no afecten negativamente al simulador.
+5. Haz un commit de tus cambios con un mensaje claro y conciso:
+   ```bash
+   git commit -m "Descripción breve de los cambios"
+6. Envía tus cambios a tu repositorio remoto:
+   ```bash
+   git push origin nombre-de-tu-rama
+7. Abre un Pull Request en el repositorio original, explicando los cambios realizados y el propósito de los mismos.
+
+### Recomendaciones
+
+- Mantén la estructura base del proyecto: No elimines funcionalidades o estilos existentes sin una justificación clara.
+- Sigue las normas de estilo del proyecto para mantener la consistencia del código.
+- Acompaña tus cambios con documentación adicional si introduces nuevas características.
+
+### Sugerencias e Ideas
+Si tienes ideas para mejorar el simulador o encuentras errores, abre un issue en el repositorio. Describe detalladamente el problema o la propuesta para que pueda ser discutida y evaluada.
+
+Tu colaboración ayudará a mejorar esta herramienta y a expandir las posibilidades del sistema YSystem.
+
+### Detalles Incluidos:
+1. **Pasos claros** para realizar contribuciones técnicas, como forks, ramas y commits.
+2. **Recomendaciones** para mantener la estructura base del proyecto.
+3. Una sección para fomentar la participación mediante **issues** para errores o nuevas ideas.
+
+Si necesitas algún ajuste o complemento, házmelo saber. 😊
+
+
+
+
