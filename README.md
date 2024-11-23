@@ -44,7 +44,7 @@ Para usar este proyecto no se necesita instalación adicional, solo un navegador
 
 ## Cómo Usarlo
 
-1. **Abrir el Simulador**:
+1. **Abrir el Simulador**: https://dpa3001.github.io/ysystem-simulator/
 
 2. **Configurar las Tiradas**:
    - Selecciona:
