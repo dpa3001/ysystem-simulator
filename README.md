@@ -38,6 +38,7 @@ Para usar este proyecto no se necesita instalación adicional, solo un navegador
 ├── index.html        # Página principal del simulador
 ├── README.md         # Este archivo
 ├── /assets           # (Opcional) Carpeta para almacenar imágenes o recursos personalizados
+```
 
 ---
 
