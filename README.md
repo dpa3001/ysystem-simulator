@@ -1,33 +1,63 @@
-# Simulador de Tiradas para el Sistema Genérico YSystem
+# Simulador de Enfrentamientos para YSystem (Versión 2)
 
-Este proyecto es un simulador de tiradas diseñado específicamente para el sistema genérico **YSystem** desarrollado por [Walhalla Ediciones](https://walhallaediciones.gitlab.io/ysystem/). El simulador permite calcular y analizar múltiples tiradas de dados, bonificadores y dificultades de manera automatizada, facilitando el uso y comprensión de las mecánicas del sistema.
+Bienvenido al repositorio del **Simulador de Enfrentamientos para YSystem (V2)**, una herramienta interactiva diseñada para facilitar el análisis y la comprensión de las mecánicas del sistema genérico **YSystem** desarrollado por [Walhalla Ediciones](https://walhallaediciones.gitlab.io/ysystem/).
 
 ## Tabla de Contenidos
-- [Características](#características)
-- [Requisitos](#requisitos)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Cómo Usarlo](#cómo-usarlo)
-- [Personalización](#personalización)
-- [Contribuciones](#contribuciones)
-- [Licencia](#licencia)
+- [Simulador de Enfrentamientos para YSystem (Versión 2)](#simulador-de-enfrentamientos-para-ysystem-versión-2)
+  - [Tabla de Contenidos](#tabla-de-contenidos)
+  - [Introducción](#introducción)
+  - [Características](#características)
+  - [Nuevas Visualizaciones](#nuevas-visualizaciones)
+  - [Requisitos y Dependencias](#requisitos-y-dependencias)
+  - [Estructura del Proyecto](#estructura-del-proyecto)
+  - [Cómo Usar el Simulador](#cómo-usar-el-simulador)
+  - [Personalización](#personalización)
+  - [Contribuciones](#contribuciones)
+  - [Licencia](#licencia)
+
+---
+
+## Introducción
+
+El Simulador de Enfrentamientos para YSystem (V2) es una aplicación web moderna e interactiva que permite simular tiradas de dados ajustadas a las mecánicas del sistema genérico **YSystem**. En esta versión se han agregado funcionalidades nuevas tales como Recuerdo Cuando... y el bonificador de (+3) por profesión, así como gráficos dinámicos con **D3.js** para visualizar de forma clara y detallada la distribución de resultados y la evolución de las simulaciones.
+
+El Simulador de Enfrentamientos para **YSystem** (V2) es una aplicación web moderna e interactiva diseñada para simular tiradas de dados según las mecánicas del sistema genérico YSystem. En esta versión se han incorporado funcionalidades novedosas, como la mecánica **Recuerdo Cuando...** y un bono adicional de (+3) por **profesión**, además de gráficos dinámicos con **D3.js** que permiten visualizar de forma clara y detallada tanto la distribución de resultados como la evolución de las simulaciones.
 
 ---
 
 ## Características
 
-- **Simulación Rápida**: Ejecuta tiradas de dados con bonificadores y evalúa automáticamente los éxitos, fracasos, críticos y pifias.
-- **Resultados Detallados**: Presenta los resultados de las simulaciones en una tabla interactiva gracias a [DataTables](https://datatables.net/).
-- **Modos Oscuro y Claro**: Personaliza la interfaz para adaptarla a tus preferencias visuales.
-- **Responsive Design**: Interfaz totalmente adaptable para su uso en dispositivos móviles, tabletas y ordenadores de escritorio.
+- **Simulación Avanzada:** Ejecuta múltiples simulaciones que incorporan tiradas de dados, bonificadores, dificultades y mecánicas especiales como "Recuerdo cuando...".
+- **Interfaz Dinámica:** Incluye modo claro/oscuro, toggles interactivos para activar mecánicas opcionales (Recuerdo cuando... y bono "+3 de Profesión") y una tabla interactiva basada en DataTables.
+- **Visualizaciones con D3.js:** La herramienta genera gráficos dinámicos que representan los valores más importantes de las simulaciones.
+- **Diseño Responsive y Modular:** Optimizado para dispositivos móviles, tabletas y escritorios, con una estructura modular que facilita la personalización y extensión del simulador.
 
 ---
 
-## Requisitos
+## Nuevas Visualizaciones
 
-Para usar este proyecto no se necesita instalación adicional, solo un navegador moderno. Sin embargo, las siguientes dependencias están incluidas y se cargan desde CDNs:
+La versión 2 incorpora una serie de gráficos creados con **D3.js** para ofrecer un análisis detallado de las simulaciones:
+
+- **Gráfico de Pastel:** Muestra la distribución de los resultados finales en porcentajes.
+- **Histograma:** Visualiza la frecuencia de la suma total de los dados (resultadoPJ) de manera discreta, con las barras centradas en cada número.
+- **Gráfico de Barras Horizontal:** Representa la frecuencia absoluta de cada categoría de resultado (Éxito, Fallo, Crítico, Pifia).
+- **Gráfico de Línea:** Ilustra el promedio acumulado de éxitos (%) conforme se ejecutan las simulaciones, permitiendo ver cómo se estabiliza la tasa de éxito.
+- **Gráfico de Dispersión:** Cada punto corresponde a una simulación, con el eje X mostrando el número (índice) de la simulación y el eje Y la suma total obtenida, lo que te permite visualizar la dispersión y el comportamiento de cada lanzamiento.
+
+Cada gráfico se genera de forma dinámica y se actualiza tras cada simulación, permitiendo una experiencia interactiva y visualmente coherente con el estilo del proyecto.
+
+---
+
+## Requisitos y Dependencias
+
+El simulador se ejecuta en cualquier navegador moderno y utiliza las siguientes dependencias, que se cargan desde CDNs:
+
 - [jQuery](https://jquery.com/)
 - [DataTables](https://datatables.net/)
+- [D3.js](https://d3js.org/)
 - [Font Awesome](https://fontawesome.com/)
+
+No se requiere instalación adicional, solo clonar el repositorio y abrir `index.html` en tu navegador.
 
 ---
 
@@ -36,79 +66,60 @@ Para usar este proyecto no se necesita instalación adicional, solo un navegador
 ```plaintext
 /
 ├── index.html        # Página principal del simulador
+├── styles.css        # Estilos del simulador y gráficos
+├── scripts.js        # Lógica de simulación y generación de gráficos con D3.js
 ├── README.md         # Este archivo
-├── /assets           # (Opcional) Carpeta para almacenar imágenes o recursos personalizados
+└── assets/           # (Opcional) Imágenes y otros recursos
 ```
 
----
+## Cómo Usar el Simulador
+1. Abre el simulador en tu navegador (por ejemplo, vía GitHub Pages). 
+2. Configura los parámetros: 
+   - Selecciona el número de dados de **Habilidad PJ** (1, 2 o 3). 
+   - Escoge el **Bonificador PJ** (0, +1, +2, +4 o +6). 
+   - Define la **Dificultad** del enfrentamiento (valor entre 5 y 25). 
+   - Establece el número de simulaciones a ejecutar.
+3. Activa o desactiva las mecánicas opcionales:
+- **Recuerdo cuando...** (suma 2 dados extra).
+- **+3 de Profesión** (agrega un bono adicional al bonificador base).
+4. Ejecuta la simulación haciendo clic en "Simular Enfrentamientos". Los resultados se muestran en una tabla interactiva y en múltiples gráficos. 
+5. Utiliza el toggle "Mostrar/Ocultar Tabla" para visualizar u ocultar la tabla de resultados y consulta los gráficos para analizar la distribución, tendencias y dispersión de los resultados.
 
-## Cómo Usarlo
-
-1. **Abrir el Simulador** pulsando el botón central de tu ratón sobre este enlace: https://dpa3001.github.io/ysystem-simulator/
-
-
-2. **Configurar las Tiradas**:
-   - Selecciona:
-     - Número de dados de **Habilidad PJ1** (1, 2 o 3).
-     - **Bonificador PJ1** correspondiente al atributo relacionado con la habilidad del personaje (0, +1, +2, +4 o +6).
-     - **Dificultad** del enfrentamiento (entre 5 y 25).
-
-3. **Resultados**:
-   - **Tabla**: Visualiza los resultados de cada tirada en una tabla interactiva (incluye tiradas de dados, bonificadores, dificultad y el resultado final).
-   - **Resumen**: Consulta los datos acumulativos de las simulaciones (éxitos, fracasos, críticos y pifias).
-
----
+## Personalización
+- **Temas:** Cambia entre modo claro y modo oscuro con el botón "Modo Claro"/"Modo Oscuro".
+- **Gráficos:** Los gráficos dinámicos se generan utilizando D3.js. Si deseas personalizarlos, puedes modificar las funciones en scripts.js o ajustar los estilos en styles.css.
+- **Interfaz Modular:** La estructura del proyecto permite añadir nuevas funcionalidades o gráficos sin afectar el núcleo del simulador.
 
 ## Contribuciones
+¡Tu colaboración es bienvenida! Para contribuir, sigue estos pasos:
 
-¡Tu participación es bienvenida! Si deseas colaborar en el desarrollo del simulador de tiradas para el sistema genérico **YSystem**, sigue estos pasos:
+1. Haz un **fork** del repositorio.
+2. Crea una nueva rama para tus cambios:
 
-1. Haz un **fork** del repositorio para crear una copia en tu cuenta.
-2. Crea una nueva rama en tu repositorio local para los cambios que deseas realizar:
-   ```bash
-   git checkout -b nombre-de-tu-rama
-3. Realiza las modificaciones o añade nuevas funcionalidades.
-4. Prueba tus cambios para asegurarte de que no afecten negativamente al simulador.
-5. Haz un commit de tus cambios con un mensaje claro y conciso:
-   ```bash
-   git commit -m "Descripción breve de los cambios"
-6. Envía tus cambios a tu repositorio remoto:
-   ```bash
-   git push origin nombre-de-tu-rama
-7. Abre un Pull Request en el repositorio original, explicando los cambios realizados y el propósito de los mismos.
+```bash
+git checkout -b nombre-de-tu-rama
+```
+3. Realiza los cambios, asegurándote de probar y documentar cada modificación.
+4. Haz commit de tus cambios con un mensaje claro:
 
-### Recomendaciones
-
-- Mantén la estructura base del proyecto: No elimines funcionalidades o estilos existentes sin una justificación clara.
-- Sigue las normas de estilo del proyecto para mantener la consistencia del código.
-- Acompaña tus cambios con documentación adicional si introduces nuevas características.
-
-### Sugerencias e Ideas
-Si tienes ideas para mejorar el simulador o encuentras errores, abre un issue en el repositorio. Describe detalladamente el problema o la propuesta para que pueda ser discutida y evaluada.
-
-Tu colaboración ayudará a mejorar esta herramienta y a expandir las posibilidades del sistema YSystem.
-
-### Detalles Incluidos:
-1. **Pasos claros** para realizar contribuciones técnicas, como forks, ramas y commits.
-2. **Recomendaciones** para mantener la estructura base del proyecto.
-3. Una sección para fomentar la participación mediante **issues** para errores o nuevas ideas.
-
-Si necesitas algún ajuste o complemento, házmelo saber. 😊
-
----
+```bash
+git commit -m "Descripción de los cambios"
+```
+5. Envía tus cambios a tu repositorio remoto:
+```bash
+git push origin nombre-de-tu-rama
+```
+6. Abre un Pull Request en el repositorio original describiendo los cambios y las mejoras realizadas.
 
 ## Licencia
+Este proyecto se distribuye bajo la licencia Creative Commons BY-NC-ND 4.0. Se permite su uso, distribución y modificación para fines educativos y recreativos, siempre que se atribuya adecuadamente y no se utilice con fines comerciales sin permiso.
 
-Este proyecto es una herramienta complementaria diseñada para facilitar el uso del sistema genérico **YSystem**, desarrollado por Daniel Palacios Alonso. El simulador se ofrece de manera gratuita para fines educativos y recreativos, respetando los derechos de propiedad intelectual del sistema **Creative Commons BY-NC-ND 4.0**.
+**Atribución:** Si utilizas este simulador o partes de su código, por favor incluye la siguiente atribución:
 
-### Condiciones de Uso
-- **Fines permitidos**: Puedes utilizar el simulador para actividades relacionadas con la enseñanza, aprendizaje o recreación.
-- **Prohibiciones**: No se permite el uso del simulador con fines comerciales o de lucro sin previa autorización.
+- Desarrollado por: Daniel Palacios Alonso
 
-### Atribución
-Si utilizas este simulador o partes de su código en tus proyectos, es importante incluir una mención a **Daniel Palacios Alonso** y un enlace al sistema oficial [YSystem](https://walhallaediciones.gitlab.io/ysystem/).
+- Basado en YSystem: [YSystem de Walhalla Ediciones](https://walhallaediciones.gitlab.io/ysystem/)
 
-### Propiedad Intelectual
-Las mecánicas, conceptos y elementos del sistema **YSystem** son propiedad intelectual de **Walhalla Ediciones**. Este simulador no sustituye ni reemplaza la documentación oficial ni los productos ofrecidos por la editorial.
-
-Para más detalles sobre los términos de uso de **YSystem**, consulta su [documentación oficial](https://walhallaediciones.gitlab.io/ysystem/).
+---
+¡Gracias por usar el Simulador de Enfrentamientos para YSystem (V2)!
+Tu colaboración y tus sugerencias ayudan a mejorar continuamente esta herramienta para la comunidad.
