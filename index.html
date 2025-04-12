@@ -1,269 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Enfrentamientos</title>
-    <!-- CSS para DataTables -->
+    <title>Simulador de Enfrentamientos - Mejorado</title>
+    <!-- CSS de DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-    <!-- Iconos -->
+    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        :root {
-            --background: #333;
-            --text-color: #fff;
-            --card-background: #444;
-            --button-background: #555;
-            --button-hover: #777;
-            --toggle-background: #555;
-            --toggle-checked: #777;
-            --table-header: #555;
-            --border-color: #555;
-            --dice-icon-color: #fff;
-        }
-
-        body.light {
-            --background: #f4f4f4;
-            --text-color: #000;
-            --card-background: #fff;
-            --button-background: #ddd;
-            --button-hover: #bbb;
-            --toggle-background: #ddd;
-            --toggle-checked: #bbb;
-            --table-header: #ddd;
-            --border-color: #ccc;
-            --dice-icon-color: #000;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--background);
-            color: var(--text-color);
-            padding: 10px;
-        }
-
-        /* Cabecera y Logo */
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header img {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-            color: var(--text-color);
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Botón de Modo Claro/Oscuro */
-        #toggleTheme {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: var(--button-background);
-            color: var(--text-color);
-            font-size: 1rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        #toggleTheme:hover {
-            background-color: var(--button-hover);
-        }
-
-        /* Estilos para los selectores */
-        .selector-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-        }
-
-        .selector-group label {
-            font-size: 1rem;
-            font-weight: bold;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .selector-group select {
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            background-color: var(--card-background);
-            color: var(--text-color);
-            width: auto;
-            text-align: center;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            border: none;
-            background-color: var(--button-background);
-            color: var(--text-color);
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: var(--button-hover);
-        }
-
-        /* Estilos para el toggle */
-        #toggleTablaContainer {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-            font-size: 1rem; /* Ajusta el tamaño del texto */
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 40px; /* Tamaño reducido */
-            height: 20px; /* Tamaño reducido */
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--toggle-background);
-            transition: 0.4s;
-            border-radius: 20px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px; /* Tamaño reducido */
-            width: 14px; /* Tamaño reducido */
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--toggle-checked);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(20px); /* Ajustado para el nuevo tamaño */
-        }
-
-        /* Resultados */
-        #resultado {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            text-align: center;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        #resultado span {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            font-size: 1rem;
-            background-color: var(--card-background);
-            color: var(--text-color);
-            min-width: 120px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            overflow-x: auto;
-            background-color: var(--card-background);
-            color: var(--text-color);
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        th {
-            background-color: var(--table-header);
-            color: var(--text-color);
-            font-size: 1rem;
-        }
-
-        td {
-            font-size: 0.9rem;
-        }
-    </style>
+    <!-- Nuestro CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
         <img src="https://walhallaediciones.com/wp-content/uploads/2021/01/noticia_ysystem.jpg" alt="Logo de YSystem">
         <h1>Simulador de Enfrentamientos</h1>
-        <button id="toggleTheme">Modo Claro</button>
+        <button id="toggleTheme" class="button">Modo Claro</button>
     </header>
     <div class="container">
         <div class="selector-group">
-            <label for="HPJ1">
-                <i class="fas fa-dice-six"></i> Habilidad PJ1
-            </label>
+            <label for="HPJ1"><i class="fas fa-dice-six"></i> Habilidad PJ1</label>
             <select id="HPJ1">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
-            <label for="BPJ1">
-                <i class="fas fa-plus-circle"></i> Bonificador PJ1
-            </label>
+            <label for="BPJ1"><i class="fas fa-plus-circle"></i> Bonificador PJ1</label>
             <select id="BPJ1">
                 <option value="0">0</option>
                 <option value="1">+1</option>
@@ -273,9 +37,7 @@
             </select>
         </div>
         <div class="selector-group">
-            <label for="numSimulaciones">
-                <i class="fas fa-calculator"></i> Simulaciones
-            </label>
+            <label for="numSimulaciones"><i class="fas fa-calculator"></i> Simulaciones</label>
             <select id="numSimulaciones">
                 <option value="1">1</option>
                 <option value="10">10</option>
@@ -284,22 +46,36 @@
                 <option value="500">500</option>
                 <option value="1000">1000</option>
             </select>
-            <label for="dificultad">
-                <i class="fas fa-flag"></i> Dificultad
-            </label>
-            <select id="dificultad">
-                <script>
-                    for (let i = 5; i <= 25; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <label for="dificultad"><i class="fas fa-flag"></i> Dificultad</label>
+            <select id="dificultad"></select>
         </div>
-        <button onclick="simularEnfrentamientos()">Simular Enfrentamientos</button>
-        <div id="toggleTablaContainer">
+        <!-- Toggle switches para "Recuerdo cuando..." y "+3 de Profesión" -->
+        <div class="selector-group">
+            <label for="toggleRecuerdo"><i class="fas fa-history"></i> Recuerdo cuando...</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggleRecuerdo">
+                <span class="slider"></span>
+            </label>
+            <label for="toggleProfesion"><i class="fas fa-briefcase"></i> +3 de Profesión</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggleProfesion">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <button id="simularBtn" class="button">Simular Enfrentamientos</button>
+        <!-- Bloque Mostrar/Ocultar Tabla -->
+        <div id="toggleTablaContainer" class="selector-group">
             <span>Mostrar/Ocultar Tabla</span>
             <label class="toggle-switch">
-                <input type="checkbox" id="toggleTabla" checked>
+                <input type="checkbox" id="toggleTabla" checked="">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <!-- Bloque Mostrar/Ocultar Gráficos -->
+        <div id="toggleGraphsContainer" class="selector-group">
+            <span>Mostrar/Ocultar Gráficos</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggleGraphs" checked>
                 <span class="slider"></span>
             </label>
         </div>
@@ -315,92 +91,53 @@
             <table id="tablaResultados" class="display">
                 <thead>
                     <tr>
-                        <th><i class="fas fa-dice dice-icon"></i> 1</th>
-                        <th><i class="fas fa-dice dice-icon"></i> 2</th>
-                        <th><i class="fas fa-dice dice-icon"></i> 3</th>
-                        <th>Bonificador por Atributo</th>
+                        <th><i class="fas fa-dice dice-icon"></i> Dados</th>
+                        <th>Bonificador</th>
                         <th>Resultado PJ1</th>
                         <th>Dificultad</th>
                         <th>Resultado Final</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
+    <!-- Contenedor para gráficos -->
+    <div id="chartsContainer" class="container">
+        <h2>Estadísticas de las Tiradas</h2>
 
-    <!-- Scripts para DataTables y jQuery -->
+        <figure class="chart-figure" id="pieFigure">
+            <div id="pieChart"></div>
+            <figcaption>Distribución de Resultados Finales</figcaption>
+        </figure>
+
+        <figure class="chart-figure" id="histogramFigure">
+            <div id="histogramChart"></div>
+            <figcaption>Histograma de la Suma Total</figcaption>
+        </figure>
+
+        <figure class="chart-figure" id="barFigure">
+            <div id="barChart"></div>
+            <figcaption>Frecuencia de Resultados Finales</figcaption>
+        </figure>
+
+        <figure class="chart-figure" id="lineFigure">
+            <div id="lineChart"></div>
+            <figcaption>Promedio Acumulado de Éxitos (%)</figcaption>
+        </figure>
+
+        <figure class="chart-figure" id="scatterFigure">
+            <div id="scatterChart"></div>
+            <figcaption>Dispersión: Índice vs. Suma Total</figcaption>
+        </figure>
+    </div>
+
+    <!-- Librerías: jQuery, DataTables y D3.js -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script>
-        document.getElementById('toggleTheme').addEventListener('click', () => {
-            document.body.classList.toggle('light');
-            const isLightMode = document.body.classList.contains('light');
-            document.getElementById('toggleTheme').textContent = isLightMode ? 'Modo Oscuro' : 'Modo Claro';
-        });
-
-        $(document).ready(function () {
-            $('#tablaResultados').DataTable();
-            $('#toggleTabla').on('change', function () {
-                $('#tablaContainer').toggle(this.checked);
-            });
-        });
-
-        function simularEnfrentamientos() {
-            const habilidadPJ1 = parseInt(document.getElementById("HPJ1").value);
-            const bonificadorPJ1 = parseInt(document.getElementById("BPJ1").value);
-            const dificultad = parseInt(document.getElementById("dificultad").value);
-            const numSimulaciones = parseInt(document.getElementById("numSimulaciones").value);
-
-            const tabla = $('#tablaResultados').DataTable();
-            tabla.clear();
-
-            let exitos = 0, fracasos = 0, criticos = 0, pifias = 0;
-
-            for (let i = 0; i < numSimulaciones; i++) {
-                const dados = [];
-                for (let j = 0; j < habilidadPJ1; j++) {
-                    dados.push(Math.floor(Math.random() * 6) + 1);
-                }
-                while (dados.length < 3) dados.push("-");
-
-                const sumaDados = dados.reduce((acc, val) => (val !== "-" ? acc + val : acc), 0);
-                const resultadoPJ1 = sumaDados + bonificadorPJ1;
-                const seises = dados.filter(d => d === 6).length;
-                const unos = dados.filter(d => d === 1).length;
-                let resultadoFinal = "Fallo";
-
-                if (seises >= 2) {
-                    resultadoFinal = "Crítico";
-                    criticos++;
-                    exitos++;
-                } else if (unos === habilidadPJ1) {
-                    resultadoFinal = "Pifia";
-                    pifias++;
-                    fracasos++;
-                } else if (resultadoPJ1 >= dificultad) {
-                    resultadoFinal = "Éxito";
-                    exitos++;
-                } else {
-                    fracasos++;
-                }
-
-                tabla.row.add([dados[0], dados[1], dados[2], bonificadorPJ1, resultadoPJ1, dificultad, resultadoFinal]);
-            }
-
-            tabla.draw();
-
-            const porcentajeExitos = ((exitos / numSimulaciones) * 100).toFixed(2);
-            const porcentajeFallos = ((fracasos / numSimulaciones) * 100).toFixed(2);
-
-            document.getElementById("totalExitos").textContent = exitos;
-            document.getElementById("totalFracasos").textContent = fracasos;
-            document.getElementById("totalCriticos").textContent = criticos;
-            document.getElementById("totalPifias").textContent = pifias;
-            document.getElementById("mediaExitos").textContent = `${porcentajeExitos}%`;
-            document.getElementById("mediaFallos").textContent = `${porcentajeFallos}%`;
-        }
-    </script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Nuestro script -->
+    <script src="scripts.js"></script>
 </body>
+
 </html>
