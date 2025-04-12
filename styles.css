@@ -1,0 +1,263 @@
+:root {
+    --background: #333;
+    --text-color: #fff;
+    --card-background: #444;
+    --button-background: #555;
+    --button-hover: #777;
+    --toggle-background: #555;
+    --toggle-checked: #777;
+    --table-header: #555;
+    --border-color: #555;
+    --dice-icon-color: #fff;
+}
+
+body.light {
+    --background: #f4f4f4;
+    --text-color: #000;
+    --card-background: #fff;
+    --button-background: #ddd;
+    --button-hover: #bbb;
+    --toggle-background: #ddd;
+    --toggle-checked: #bbb;
+    --table-header: #ddd;
+    --border-color: #ccc;
+    --dice-icon-color: #000;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    padding: 10px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#toggleTheme {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-background);
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#toggleTheme:hover {
+    background-color: var(--button-hover);
+}
+
+.selector-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.selector-group label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.selector-group select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Clase para botones */
+.button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    background-color: var(--button-background);
+    color: var(--text-color);
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--button-hover);
+}
+
+/* Estilos para toggle switches */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--toggle-background);
+    transition: 0.4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--toggle-checked);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Colores para diferenciar visualmente los dados */
+.base-dado {
+    color: var(--dice-icon-color);
+}
+
+.extra-dado {
+    color: #00BFFF; /* Azul claro para dados extra (Recuerdo cuando...) */
+    font-weight: bold;
+}
+
+/* Estilo para bono de Profesión en la tabla */
+.bonus-profesion {
+    color: #00BFFF;
+    font-weight: bold;
+}
+
+#resultado {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#resultado span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--card-background);
+    min-width: 120px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--table-header);
+    font-size: 1rem;
+}
+
+td {
+    font-size: 0.9rem;
+}
+
+/* Contenedor de gráficos: se puede ajustar para evitar scroll excesivo */
+#chartsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    overflow-x: auto;
+  }
+  
+  /* Estilos para cada gráfico encapsulado en un figure */
+  figure.chart-figure {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--card-background);
+    width: 100%;
+    max-width: 500px; /* Ajusta según tus necesidades */
+    box-sizing: border-box;
+  }
+  
+  figure.chart-figure figcaption {
+    margin-top: 10px;
+    font-size: 1rem;
+    text-align: center;
+    color: var(--text-color);
+  }
+  
