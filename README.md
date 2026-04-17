@@ -13,8 +13,8 @@ Desde la página principal se puede acceder a la tabla completa mediante el bot�
 
 ## Acceso rápido
 
-- <a href="https://dpa3001.github.io/ysystem-simulator/" target="_blank" rel="noopener noreferrer">Abrir simulador online</a>
-- <a href="https://dpa3001.github.io/ysystem-simulator/estadisticas.html" target="_blank" rel="noopener noreferrer">Abrir tabla estadística completa</a>
+- [Abrir simulador online](https://dpa3001.github.io/ysystem-simulator/)
+- [Abrir tabla estadística completa](https://dpa3001.github.io/ysystem-simulator/estadisticas.html)
 
 ## Funcionalidades actuales
 
