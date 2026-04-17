@@ -425,3 +425,7 @@ function createScatterPlot(simulaciones) {
 }
 
 document.getElementById("simularBtn").addEventListener("click", simularEnfrentamientos);
+
+document.getElementById("openStatsBtn").addEventListener("click", () => {
+    window.location.href = "estadisticas.html";
+});

@@ -21,13 +21,13 @@
     </header>
     <div class="container">
         <div class="selector-group">
-            <label for="HPJ1"><i class="fas fa-dice-six"></i> Habilidad PJ</label>
+            <label for="HPJ1"><i class="fas fa-dice-six"></i> Habilidad PJ1</label>
             <select id="HPJ1">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
-            <label for="BPJ1"><i class="fas fa-plus-circle"></i> Bonificador PJ</label>
+            <label for="BPJ1"><i class="fas fa-plus-circle"></i> Bonificador PJ1</label>
             <select id="BPJ1">
                 <option value="0">0</option>
                 <option value="1">+1</option>
@@ -62,7 +62,13 @@
                 <span class="slider"></span>
             </label>
         </div>
-        <button id="simularBtn" class="button">Simular Enfrentamientos</button>
+        
+        <div class="selector-group">
+            <button id="simularBtn" class="button">Simular Enfrentamientos</button>
+    <button id="openStatsBtn" class="button">
+        Tabla estadística completa
+    </button>
+</div>
         <!-- Bloque Mostrar/Ocultar Tabla -->
         <div id="toggleTablaContainer" class="selector-group">
             <span>Mostrar/Ocultar Tabla</span>
@@ -93,7 +99,7 @@
                     <tr>
                         <th><i class="fas fa-dice dice-icon"></i> Dados</th>
                         <th>Bonificador</th>
-                        <th>Resultado PJ</th>
+                        <th>Resultado PJ1</th>
                         <th>Dificultad</th>
                         <th>Resultado Final</th>
                     </tr>
