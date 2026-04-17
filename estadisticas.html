@@ -87,6 +87,12 @@
             background-color: var(--button-hover);
         }
 
+        #backToSimulator {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         .page-container {
             max-width: 1500px;
             margin: 0 auto;
@@ -362,7 +368,8 @@
         }
 
         @media (max-width: 768px) {
-            #toggleTheme {
+            #toggleTheme,
+            #backToSimulator {
                 position: static;
                 margin-top: 12px;
             }
@@ -378,6 +385,7 @@
 
 <body class="light">
     <header>
+        <a id="backToSimulator" class="button" href="index.html">Volver al simulador</a>
         <button id="toggleTheme">Modo Oscuro</button>
         <h1>Tabla Estadística Completa de Tiradas</h1>
         <p>
@@ -509,7 +517,6 @@
         <section class="panel button-row">
             <button class="button" id="resetFilters">Restablecer filtros</button>
             <button class="button" id="exportCSV">Exportar vista CSV</button>
-            <a class="button" href="index.html">Volver al simulador</a>
         </section>
     </main>
 

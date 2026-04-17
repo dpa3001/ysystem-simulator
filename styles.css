@@ -112,6 +112,8 @@ header h1 {
     border: none;
     background-color: var(--button-background);
     color: var(--text-color);
+    text-decoration: none;
+    display: inline-block;
     border-radius: 5px;
     font-weight: bold;
     transition: background-color 0.3s ease;
