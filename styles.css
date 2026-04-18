@@ -24,28 +24,36 @@ body.light {
     --dice-icon-color: #000;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
+    margin: 0;
+    padding: 10px 12px 30px;
     font-family: Arial, sans-serif;
+    line-height: 1.4;
     background-color: var(--background);
     color: var(--text-color);
-    padding: 10px;
 }
 
-header {
+.site-header {
+    position: relative;
     text-align: center;
     margin-bottom: 20px;
+    padding-top: 56px;
 }
 
-header img {
+.site-header img {
     max-width: 150px;
     height: auto;
     margin-bottom: 10px;
 }
 
-header h1 {
+.site-header h1 {
+    margin: 0 0 10px;
     font-size: 1.8rem;
-    margin-bottom: 10px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .container {
@@ -60,21 +68,14 @@ header h1 {
 
 #toggleTheme {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--button-background);
-    color: var(--text-color);
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    top: 0;
+    right: 0;
 }
 
-#toggleTheme:hover {
-    background-color: var(--button-hover);
+#openStatsBtn {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .selector-group {
@@ -87,35 +88,45 @@ header h1 {
 }
 
 .selector-group label {
-    font-size: 1rem;
-    font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 .selector-group select {
     padding: 10px;
+    min-width: 78px;
     font-size: 1rem;
+    text-align: center;
     border: 1px solid var(--border-color);
     border-radius: 5px;
     background-color: var(--card-background);
     color: var(--text-color);
-    text-align: center;
 }
 
-/* Clase para botones */
+.selector-group--toggles {
+    gap: 24px;
+}
+
+.toggle-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .button {
+    display: inline-block;
     padding: 10px 20px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
     cursor: pointer;
     border: none;
+    border-radius: 5px;
     background-color: var(--button-background);
     color: var(--text-color);
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 5px;
-    font-weight: bold;
     transition: background-color 0.3s ease;
 }
 
@@ -123,7 +134,13 @@ header h1 {
     background-color: var(--button-hover);
 }
 
-/* Estilos para toggle switches */
+.button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+    outline: 2px solid #1e90ff;
+    outline-offset: 2px;
+}
+
 .toggle-switch {
     position: relative;
     display: inline-block;
@@ -132,57 +149,57 @@ header h1 {
 }
 
 .toggle-switch input {
-    opacity: 0;
     width: 0;
     height: 0;
+    opacity: 0;
 }
 
 .slider {
     position: absolute;
+    inset: 0;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    border-radius: 20px;
     background-color: var(--toggle-background);
     transition: 0.4s;
-    border-radius: 20px;
 }
 
-.slider:before {
+.slider::before {
     position: absolute;
-    content: "";
-    height: 14px;
-    width: 14px;
     left: 3px;
     bottom: 3px;
-    background-color: white;
-    transition: 0.4s;
+    width: 14px;
+    height: 14px;
+    content: "";
     border-radius: 50%;
+    background-color: #fff;
+    transition: 0.4s;
 }
 
-input:checked + .slider {
+.toggle-switch input:checked + .slider {
     background-color: var(--toggle-checked);
 }
 
-input:checked + .slider:before {
+.toggle-switch input:checked + .slider::before {
     transform: translateX(20px);
 }
 
-/* Colores para diferenciar visualmente los dados */
+.toggle-switch input:focus-visible + .slider {
+    outline: 2px solid #1e90ff;
+    outline-offset: 2px;
+}
+
 .base-dado {
     color: var(--dice-icon-color);
 }
 
 .extra-dado {
-    color: #00BFFF; /* Azul claro para dados extra (Recuerdo cuando...) */
-    font-weight: bold;
+    color: #00bfff;
+    font-weight: 700;
 }
 
-/* Estilo para bono de Profesión en la tabla */
 .bonus-profesion {
-    color: #00BFFF;
-    font-weight: bold;
+    color: #00bfff;
+    font-weight: 700;
 }
 
 #resultado {
@@ -190,33 +207,33 @@ input:checked + .slider:before {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    text-align: center;
     width: 100%;
     margin: 0 auto;
+    text-align: center;
 }
 
 #resultado span {
     display: inline-flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    min-width: 120px;
     padding: 10px;
+    font-size: 1rem;
     border: 1px solid var(--border-color);
     border-radius: 5px;
-    font-size: 1rem;
     background-color: var(--card-background);
-    min-width: 120px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
+    border-radius: 5px;
     background-color: var(--card-background);
     color: var(--text-color);
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 th,
@@ -235,31 +252,67 @@ td {
     font-size: 0.9rem;
 }
 
-/* Contenedor de gráficos: se puede ajustar para evitar scroll excesivo */
 #chartsContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     overflow-x: auto;
-  }
-  
-  /* Estilos para cada gráfico encapsulado en un figure */
-  figure.chart-figure {
+}
+
+.chart-figure {
+    width: 100%;
+    max-width: 500px;
     margin: 20px;
     padding: 10px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
     background-color: var(--card-background);
-    width: 100%;
-    max-width: 500px; /* Ajusta según tus necesidades */
-    box-sizing: border-box;
-  }
-  
-  figure.chart-figure figcaption {
+}
+
+.chart-figure figcaption {
     margin-top: 10px;
     font-size: 1rem;
     text-align: center;
     color: var(--text-color);
-  }
-  
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .site-header {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        padding-top: 0;
+    }
+
+    #toggleTheme,
+    #openStatsBtn {
+        position: static;
+    }
+
+    #openStatsBtn {
+        order: 2;
+    }
+
+    #toggleTheme {
+        order: 3;
+    }
+
+    .toggle-item {
+        width: 100%;
+        justify-content: center;
+    }
+}

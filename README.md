@@ -1,123 +1,58 @@
-# Simulador de Enfrentamientos para YSystem (v3)
+# Simulador de enfrentamientos para YSystem
 
-Aplicación web estática para simular enfrentamientos del sistema **YSystem** y consultar una tabla estadística completa de probabilidades por dificultad, dados y bonificadores.
+Herramienta web para simular tiradas de enfrentamiento y consultar probabilidades de éxito o fallo en YSystem.
 
-## Descripción general
+Este proyecto está desarrollado para **Walhalla Ediciones** y para toda la comunidad que juega YSystem.
 
-El proyecto tiene ahora dos vistas principales:
+## Uso directo
 
-- `index.html`: simulador interactivo de tiradas.
-- `estadisticas.html`: tabla estadística completa alimentada desde `datos_estadisticos.json`.
+El simulador está publicado y disponible para usar desde navegador:
 
-Desde la página principal se puede acceder a la tabla completa mediante el botón **Tabla estadística completa**.
+- [Simulador principal](https://dpa3001.github.io/ysystem-simulator/)
+- [Tabla estadística completa](https://dpa3001.github.io/ysystem-simulator/estadisticas.html)
 
-## Acceso rápido
+No hace falta instalar nada: abre el enlace y úsalo.
 
-- [Abrir simulador online](https://dpa3001.github.io/ysystem-simulator/)
-- [Abrir tabla estadística completa](https://dpa3001.github.io/ysystem-simulator/estadisticas.html)
+## Qué permite hacer
 
-## Funcionalidades actuales
+### Simulador de tiradas
 
-### Simulador principal
+En el simulador puedes ajustar habilidad, bonificador, dificultad y número de simulaciones para ver qué resultados son más probables en una situación concreta.
 
-En `index.html` se puede:
+También puedes activar modificadores como:
 
-- Seleccionar **Habilidad PJ1** entre 1 y 3 dados.
-- Seleccionar **Bonificador PJ1** entre `0`, `+1`, `+2`, `+4` y `+6`.
-- Elegir **Dificultad** entre `5` y `25`.
-- Ejecutar entre `1` y `1000` simulaciones.
-- Activar la opción **Recuerdo cuando...**, que añade `2` dados extra.
-- Activar la opción **+3 de Profesión**, que suma `+3` al bonificador base.
-- Mostrar u ocultar la tabla de resultados.
-- Mostrar u ocultar los gráficos.
-- Consultar estadísticas agregadas de éxitos, fracasos, críticos, pifias y medias porcentuales.
+- `Recuerdo cuando...`
+- `+3 de profesión`
 
-### Visualizaciones del simulador
+Después de simular, verás:
 
-Tras cada simulación, `scripts.js` genera gráficos con **D3.js**:
-
-- Gráfico de pastel de resultados finales.
-- Histograma de la suma total.
-- Gráfico de barras horizontal por tipo de resultado.
-- Gráfico de línea con el promedio acumulado de éxitos.
-- Gráfico de dispersión entre índice de simulación y suma total.
+- Resultados de tiradas.
+- Resumen de éxitos, fracasos, críticos y pifias.
+- Porcentajes medios.
+- Gráficos para entender mejor la tendencia.
 
 ### Tabla estadística completa
 
-La vista `estadisticas.html` ofrece una consulta independiente de probabilidades precomputadas:
+La sección de estadísticas está pensada para usarse **durante la partida**, de forma que jugadores y director/a de juego puedan evaluar opciones con rapidez.
 
-- Carga los datos desde `datos_estadisticos.json`.
-- Permite búsqueda libre por dificultad, tramo, dados, bonificador o interpretación.
-- Incluye filtros por:
-  - dificultad
-  - tramo
-  - dados
-  - bonificador
-  - interpretación
-- Permite ordenar columnas haciendo clic en los encabezados.
-- Resume filas visibles, éxito medio, fallo medio y rango consultado.
-- Permite exportar la vista filtrada a CSV.
-- Incluye botón para volver al simulador principal.
+Muestra porcentajes (`%`) y probabilidades de conseguir o no la acción que se quiere intentar, según la combinación de dificultad, dados y bonificador.
 
-## Datos estadísticos
+Incluye filtros, búsqueda, ordenación y exportación en CSV para consultar exactamente la situación que interese en cada momento.
 
-El archivo `datos_estadisticos.json` contiene la tabla base usada por `estadisticas.html`.
+## Flujo recomendado en partida
 
-- Total de registros: `1155`
-- Dificultades cubiertas: de `5` a `25`
-- Dados cubiertos: de `1D` a `5D`
-- Bonificadores cubiertos: de `0` a `10`
-- Tramos incluidos: `Muy fácil`, `Fácil`, `Media`, `Desafiante`, `Difícil`, `Muy difícil` y `Extrema`
-- Interpretaciones incluidas: `Muy favorable`, `Fiable`, `Disputada`, `Arriesgada`, `Desesperada` y `Casi imposible`
+1. Abre el simulador principal.
+2. Configura la tirada que quieres evaluar.
+3. Revisa el resumen y los gráficos.
+4. Si necesitas más detalle, abre la tabla estadística completa.
+5. Compara probabilidades y decide la acción.
 
-## Tecnologías y dependencias
+## Autoría
 
-El proyecto funciona en navegador y utiliza recursos cargados por CDN:
-
-- [jQuery](https://jquery.com/)
-- [DataTables](https://datatables.net/)
-- [D3.js](https://d3js.org/)
-- [Font Awesome](https://fontawesome.com/)
-
-No hay proceso de compilación ni dependencias instalables del lado del proyecto.
-
-## Estructura del proyecto
-
-```text
-/
-|-- index.html                 # Simulador principal
-|-- estadisticas.html          # Tabla estadística completa
-|-- datos_estadisticos.json    # Datos precomputados para la tabla estadística
-|-- scripts.js                 # Lógica del simulador y gráficos
-|-- styles.css                 # Estilos del simulador principal
-`-- README.md                  # Documentación del proyecto
-```
-
-## Cómo ejecutarlo
-
-Como `estadisticas.html` carga `datos_estadisticos.json` mediante `fetch`, conviene servir el proyecto desde un servidor local o publicarlo en un hosting estático.
-
-Opciones recomendadas:
-
-1. Abrir la carpeta con una extensión tipo Live Server en VS Code.
-2. Publicarlo en GitHub Pages o en cualquier servidor estático.
-3. Levantar un servidor HTTP simple y abrir `index.html` desde esa URL.
-
-## Flujo de uso recomendado
-
-1. Abre `index.html`.
-2. Configura dados, bonificador, dificultad y número de simulaciones.
-3. Activa si lo necesitas `Recuerdo cuando...` y/o `+3 de Profesión`.
-4. Ejecuta la simulación.
-5. Revisa la tabla y los gráficos.
-6. Pulsa **Tabla estadística completa** para abrir `estadisticas.html`.
-7. Filtra, ordena o exporta la tabla estadística según la combinación que quieras consultar.
+- Autor: **Daniel Palacios Alonso**
+- Proyecto para **Walhalla Ediciones** y su comunidad.
+- Basado en YSystem de [Walhalla Ediciones](https://walhallaediciones.gitlab.io/ysystem/)
 
 ## Licencia
 
 Este proyecto se distribuye bajo licencia **Creative Commons BY-NC-ND 4.0**.
-
-## Autoría
-
-- Desarrollado por: Daniel Palacios Alonso
-- Basado en YSystem de [Walhalla Ediciones](https://walhallaediciones.gitlab.io/ysystem/)

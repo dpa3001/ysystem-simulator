@@ -4,30 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Enfrentamientos - Mejorado</title>
-    <!-- CSS de DataTables -->
+    <meta name="description" content="Simulador de enfrentamientos de YSystem con tabla detallada y gráficos estadísticos.">
+    <meta name="author" content="Daniel Palacios Alonso">
+    <title>Simulador de enfrentamientos | YSystem</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
-    <!-- Iconos FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Nuestro CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="light">
-    <header>
-        <img src="https://walhallaediciones.com/wp-content/uploads/2021/01/noticia_ysystem.jpg" alt="Logo de YSystem">
-        <h1>Simulador de Enfrentamientos</h1>
-        <button id="toggleTheme" class="button">Modo Oscuro</button>
+    <header class="site-header">
+        <img src="https://walhallaediciones.com/wp-content/uploads/2021/01/noticia_ysystem.jpg" alt="Logotipo de YSystem" loading="lazy">
+        <h1>Simulador de enfrentamientos</h1>
+        <a id="openStatsBtn" class="button" href="estadisticas.html" target="_blank" rel="noopener noreferrer">
+            Tabla estadística completa
+        </a>
+        <button id="toggleTheme" class="button" type="button" aria-pressed="false">Modo oscuro</button>
     </header>
-    <div class="container">
-        <div class="selector-group">
-            <label for="HPJ1"><i class="fas fa-dice-six"></i> Habilidad PJ1</label>
+
+    <main class="container">
+        <section class="selector-group" aria-label="Configuración del personaje">
+            <label for="HPJ1"><i class="fas fa-dice-six" aria-hidden="true"></i> Habilidad de PJ1</label>
             <select id="HPJ1">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
-            <label for="BPJ1"><i class="fas fa-plus-circle"></i> Bonificador PJ1</label>
+
+            <label for="BPJ1"><i class="fas fa-plus-circle" aria-hidden="true"></i> Bonificador de PJ1</label>
             <select id="BPJ1">
                 <option value="0">0</option>
                 <option value="1">+1</option>
@@ -35,9 +39,10 @@
                 <option value="4">+4</option>
                 <option value="6">+6</option>
             </select>
-        </div>
-        <div class="selector-group">
-            <label for="numSimulaciones"><i class="fas fa-calculator"></i> Simulaciones</label>
+        </section>
+
+        <section class="selector-group" aria-label="Configuración de tiradas">
+            <label for="numSimulaciones"><i class="fas fa-calculator" aria-hidden="true"></i> Simulaciones</label>
             <select id="numSimulaciones">
                 <option value="1">1</option>
                 <option value="10">10</option>
@@ -46,103 +51,107 @@
                 <option value="500">500</option>
                 <option value="1000">1000</option>
             </select>
-            <label for="dificultad"><i class="fas fa-flag"></i> Dificultad</label>
+
+            <label for="dificultad"><i class="fas fa-flag" aria-hidden="true"></i> Dificultad</label>
             <select id="dificultad"></select>
-        </div>
-        <!-- Toggle switches para "Recuerdo cuando..." y "+3 de Profesión" -->
-        <div class="selector-group">
-            <label for="toggleRecuerdo"><i class="fas fa-history"></i> Recuerdo cuando...</label>
-            <label class="toggle-switch">
-                <input type="checkbox" id="toggleRecuerdo">
+        </section>
+
+        <section class="selector-group selector-group--toggles" aria-label="Modificadores opcionales">
+            <div class="toggle-item">
+                <label for="toggleRecuerdo"><i class="fas fa-history" aria-hidden="true"></i> Recuerdo cuando...</label>
+                <label class="toggle-switch" title="Activar o desactivar Recuerdo cuando...">
+                    <input type="checkbox" id="toggleRecuerdo" aria-label="Activar Recuerdo cuando...">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-item">
+                <label for="toggleProfesion"><i class="fas fa-briefcase" aria-hidden="true"></i> +3 de profesión</label>
+                <label class="toggle-switch" title="Activar o desactivar el bonificador de profesión">
+                    <input type="checkbox" id="toggleProfesion" aria-label="Activar bonificador de profesión">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <section class="selector-group selector-group--actions" aria-label="Acciones del simulador">
+            <button id="simularBtn" class="button" type="button">Simular enfrentamientos</button>
+        </section>
+
+        <section id="toggleTablaContainer" class="selector-group" aria-label="Visibilidad de la tabla">
+            <span>Mostrar u ocultar tabla</span>
+            <label class="toggle-switch" title="Mostrar u ocultar la tabla de resultados">
+                <input type="checkbox" id="toggleTabla" checked aria-controls="tablaContainer">
                 <span class="slider"></span>
             </label>
-            <label for="toggleProfesion"><i class="fas fa-briefcase"></i> +3 de Profesión</label>
-            <label class="toggle-switch">
-                <input type="checkbox" id="toggleProfesion">
+        </section>
+
+        <section id="toggleGraphsContainer" class="selector-group" aria-label="Visibilidad de gráficos">
+            <span>Mostrar u ocultar gráficos</span>
+            <label class="toggle-switch" title="Mostrar u ocultar los gráficos">
+                <input type="checkbox" id="toggleGraphs" checked aria-controls="chartsContainer">
                 <span class="slider"></span>
             </label>
-        </div>
-        
-        <div class="selector-group">
-            <button id="simularBtn" class="button">Simular Enfrentamientos</button>
-    <a id="openStatsBtn" class="button" href="estadisticas.html" target="_blank" rel="noopener noreferrer">
-        Tabla estadística completa
-    </a>
-</div>
-        <!-- Bloque Mostrar/Ocultar Tabla -->
-        <div id="toggleTablaContainer" class="selector-group">
-            <span>Mostrar/Ocultar Tabla</span>
-            <label class="toggle-switch">
-                <input type="checkbox" id="toggleTabla" checked="">
-                <span class="slider"></span>
-            </label>
-        </div>
-        <!-- Bloque Mostrar/Ocultar Gráficos -->
-        <div id="toggleGraphsContainer" class="selector-group">
-            <span>Mostrar/Ocultar Gráficos</span>
-            <label class="toggle-switch">
-                <input type="checkbox" id="toggleGraphs" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
-        <div id="resultado">
+        </section>
+
+        <section id="resultado" aria-live="polite" aria-label="Resumen de resultados">
             <span><strong>Éxitos:</strong> <span id="totalExitos">0</span></span>
             <span><strong>Fracasos:</strong> <span id="totalFracasos">0</span></span>
             <span><strong>Críticos:</strong> <span id="totalCriticos">0</span></span>
             <span><strong>Pifias:</strong> <span id="totalPifias">0</span></span>
-            <span><strong>Media de Éxitos (%):</strong> <span id="mediaExitos">0%</span></span>
-            <span><strong>Media de Fallos (%):</strong> <span id="mediaFallos">0%</span></span>
-        </div>
-        <div id="tablaContainer">
+            <span><strong>Media de éxitos (%):</strong> <span id="mediaExitos">0%</span></span>
+            <span><strong>Media de fallos (%):</strong> <span id="mediaFallos">0%</span></span>
+        </section>
+
+        <section id="tablaContainer" aria-label="Tabla de resultados">
             <table id="tablaResultados" class="display">
+                <caption class="sr-only">Resultados detallados de las simulaciones de enfrentamiento.</caption>
                 <thead>
                     <tr>
-                        <th><i class="fas fa-dice dice-icon"></i> Dados</th>
-                        <th>Bonificador</th>
-                        <th>Resultado PJ1</th>
-                        <th>Dificultad</th>
-                        <th>Resultado Final</th>
+                        <th scope="col"><i class="fas fa-dice" aria-hidden="true"></i> Dados</th>
+                        <th scope="col">Bonificador</th>
+                        <th scope="col">Resultado de PJ1</th>
+                        <th scope="col">Dificultad</th>
+                        <th scope="col">Resultado final</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-        </div>
-    </div>
-    <!-- Contenedor para gráficos -->
-    <div id="chartsContainer" class="container">
-        <h2>Estadísticas de las Tiradas</h2>
+        </section>
+    </main>
+
+    <section id="chartsContainer" class="container" aria-label="Gráficos de simulación">
+        <h2>Estadísticas de las tiradas</h2>
 
         <figure class="chart-figure" id="pieFigure">
             <div id="pieChart"></div>
-            <figcaption>Distribución de Resultados Finales</figcaption>
+            <figcaption>Distribución de resultados finales</figcaption>
         </figure>
 
         <figure class="chart-figure" id="histogramFigure">
             <div id="histogramChart"></div>
-            <figcaption>Histograma de la Suma Total</figcaption>
+            <figcaption>Histograma de la suma total</figcaption>
         </figure>
 
         <figure class="chart-figure" id="barFigure">
             <div id="barChart"></div>
-            <figcaption>Frecuencia de Resultados Finales</figcaption>
+            <figcaption>Frecuencia de resultados finales</figcaption>
         </figure>
 
         <figure class="chart-figure" id="lineFigure">
             <div id="lineChart"></div>
-            <figcaption>Promedio Acumulado de Éxitos (%)</figcaption>
+            <figcaption>Promedio acumulado de éxitos (%)</figcaption>
         </figure>
 
         <figure class="chart-figure" id="scatterFigure">
             <div id="scatterChart"></div>
-            <figcaption>Dispersión: Índice vs. Suma Total</figcaption>
+            <figcaption>Dispersión: índice frente a suma total</figcaption>
         </figure>
-    </div>
+    </section>
 
-    <!-- Librerías: jQuery, DataTables y D3.js -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!-- Nuestro script -->
     <script src="scripts.js"></script>
 </body>
 

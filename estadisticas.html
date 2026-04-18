@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla Estadística de Tiradas - Ysystem</title>
-
+    <meta name="description" content="Consulta estadística completa de YSystem por dificultad, dados, bonificador e interpretación.">
+    <meta name="author" content="Daniel Palacios Alonso">
+    <title>Tabla estadística de tiradas | YSystem</title>
     <style>
         :root {
             --background: #333;
@@ -15,12 +16,8 @@
             --button-hover: #777;
             --table-header: #555;
             --border-color: #555;
-            --accent: #00BFFF;
-            --success: #2e8b57;
-            --warning: #c28b00;
-            --danger: #b22222;
-            --extreme: #6a1b9a;
-            --soft-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+            --accent: #00bfff;
+            --soft-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
         }
 
         body.light {
@@ -32,10 +29,6 @@
             --table-header: #ddd;
             --border-color: #ccc;
             --accent: #0077aa;
-            --success: #dff5e8;
-            --warning: #fff3cd;
-            --danger: #f8d7da;
-            --extreme: #eadcf7;
         }
 
         * {
@@ -44,52 +37,42 @@
 
         body {
             margin: 0;
+            padding: 20px;
             font-family: Arial, sans-serif;
             background-color: var(--background);
             color: var(--text-color);
-            padding: 20px;
         }
 
         header {
-            text-align: center;
-            margin-bottom: 25px;
             position: relative;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
         header h1 {
-            margin: 0 0 8px 0;
+            margin: 0 0 8px;
             font-size: 2rem;
         }
 
         header p {
-            margin: 0;
-            opacity: 0.9;
             max-width: 1000px;
-            margin-inline: auto;
+            margin: 0 auto;
             line-height: 1.5;
+            opacity: 0.9;
         }
 
-        #toggleTheme {
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 6px;
-            background-color: var(--button-background);
-            color: var(--text-color);
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        #toggleTheme:hover {
-            background-color: var(--button-hover);
-        }
-
+        #toggleTheme,
         #backToSimulator {
             position: absolute;
             top: 0;
+            padding: 10px 18px;
+        }
+
+        #toggleTheme {
+            right: 0;
+        }
+
+        #backToSimulator {
             left: 0;
         }
 
@@ -102,10 +85,10 @@
         }
 
         .panel {
-            background-color: var(--card-background);
+            padding: 18px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 18px;
+            background-color: var(--card-background);
             box-shadow: var(--soft-shadow);
         }
 
@@ -123,8 +106,8 @@
         }
 
         .filter-group label {
-            font-weight: bold;
             font-size: 0.95rem;
+            font-weight: 700;
         }
 
         .filter-group select,
@@ -140,60 +123,68 @@
         .button-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
             justify-content: center;
+            gap: 12px;
         }
 
         .button {
+            display: inline-block;
             padding: 10px 18px;
             font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
             cursor: pointer;
             border: none;
+            border-radius: 6px;
             background-color: var(--button-background);
             color: var(--text-color);
-            border-radius: 6px;
-            font-weight: bold;
             transition: background-color 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
         }
 
         .button:hover {
             background-color: var(--button-hover);
         }
 
+        .button:focus-visible,
+        .filter-group select:focus-visible,
+        .filter-group input:focus-visible,
+        .sort-button:focus-visible {
+            outline: 2px solid #1e90ff;
+            outline-offset: 2px;
+        }
+
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         }
 
         .summary-card {
-            background-color: var(--card-background);
+            padding: 14px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 14px;
             text-align: center;
+            background-color: var(--card-background);
             box-shadow: var(--soft-shadow);
         }
 
-        .summary-card h3 {
-            margin: 0 0 6px 0;
+        .summary-card h2 {
+            margin: 0 0 6px;
             font-size: 0.95rem;
         }
 
         .summary-card p {
             margin: 0;
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--accent);
         }
 
         .legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
             justify-content: center;
+            gap: 10px;
             font-size: 0.92rem;
         }
 
@@ -202,8 +193,8 @@
             align-items: center;
             gap: 6px;
             padding: 6px 10px;
-            border-radius: 20px;
             border: 1px solid var(--border-color);
+            border-radius: 20px;
             background-color: var(--card-background);
         }
 
@@ -249,25 +240,51 @@
 
         table {
             width: 100%;
+            min-width: 1050px;
             border-collapse: collapse;
             background-color: var(--card-background);
             color: var(--text-color);
-            min-width: 1100px;
         }
 
         th,
         td {
-            border: 1px solid var(--border-color);
             padding: 10px 12px;
             text-align: center;
             font-size: 0.92rem;
+            border: 1px solid var(--border-color);
         }
 
         th {
-            background-color: var(--table-header);
             position: sticky;
             top: 0;
             z-index: 1;
+            background-color: var(--table-header);
+        }
+
+        .sort-button {
+            width: 100%;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .sort-button::after {
+            content: "";
+            margin-left: 6px;
+        }
+
+        th[aria-sort="ascending"] .sort-button::after {
+            content: "▲";
+            font-size: 0.8rem;
+        }
+
+        th[aria-sort="descending"] .sort-button::after {
+            content: "▼";
+            font-size: 0.8rem;
         }
 
         tr.muy-facil-row td:first-child,
@@ -308,10 +325,10 @@
         .tag {
             display: inline-block;
             padding: 4px 8px;
-            border-radius: 999px;
-            font-weight: bold;
-            font-size: 0.82rem;
             border: 1px solid var(--border-color);
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
         }
 
         .tag.muy-facil {
@@ -343,41 +360,80 @@
         }
 
         .interp {
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 999px;
-            border: 1px solid var(--border-color);
             display: inline-block;
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            font-weight: 700;
             white-space: nowrap;
         }
 
+        .interp.muy-favorable {
+            background: rgba(46, 139, 87, 0.22);
+        }
+
+        .interp.fiable {
+            background: rgba(0, 191, 255, 0.22);
+        }
+
+        .interp.disputada {
+            background: rgba(255, 179, 0, 0.22);
+        }
+
+        .interp.arriesgada {
+            background: rgba(251, 140, 0, 0.22);
+        }
+
+        .interp.desesperada {
+            background: rgba(229, 57, 53, 0.22);
+        }
+
+        .interp.casi-imposible {
+            background: rgba(142, 36, 170, 0.22);
+        }
+
         .status-message {
-            text-align: center;
-            font-weight: bold;
             padding: 14px;
-            border-radius: 8px;
             border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
             background-color: var(--card-background);
         }
 
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+            white-space: nowrap;
+        }
+
         footer {
-            text-align: center;
             margin-top: 12px;
-            opacity: 0.85;
+            text-align: center;
             font-size: 0.92rem;
+            opacity: 0.85;
         }
 
         @media (max-width: 768px) {
             #toggleTheme,
             #backToSimulator {
                 position: static;
-                margin-top: 12px;
             }
 
             header {
                 display: flex;
                 flex-direction: column;
                 gap: 12px;
+            }
+
+            .button {
+                width: 100%;
             }
         }
     </style>
@@ -386,23 +442,20 @@
 <body class="light">
     <header>
         <a id="backToSimulator" class="button" href="index.html">Volver al simulador</a>
-        <button id="toggleTheme">Modo Oscuro</button>
-        <h1>Tabla Estadística Completa de Tiradas</h1>
+        <button id="toggleTheme" class="button" type="button" aria-pressed="false">Modo oscuro</button>
+        <h1>Tabla estadística completa de tiradas</h1>
         <p>
-            Herramienta independiente de consulta para analizar combinaciones de dificultad, dados y bonificadores en
-            Ysystem.
-            Los datos se han generado a partir de la tabla estadística validada en Excel y permiten consultar
-            porcentajes de éxito y fallo,
-            junto con el tramo oficial de dificultad y la interpretación estadística de cada combinación.
+            Consulta independiente para analizar combinaciones de dificultad, dados y bonificadores en YSystem.
+            Los porcentajes se cargan desde una tabla validada y permiten filtrar rápidamente por tramo e interpretación.
         </p>
     </header>
 
     <main class="page-container">
-        <section class="panel">
+        <section class="panel" aria-label="Filtros de consulta">
             <div class="filters">
                 <div class="filter-group">
                     <label for="searchInput">Búsqueda libre</label>
-                    <input type="text" id="searchInput" placeholder="Ej. 2D, +6, desafiante, fiable, 11...">
+                    <input type="text" id="searchInput" placeholder="Ejemplo: 2D, +6, desafiante, fiable, 11...">
                 </div>
 
                 <div class="filter-group">
@@ -460,26 +513,26 @@
             </div>
         </section>
 
-        <section class="summary-grid">
-            <div class="summary-card">
-                <h3>Filas visibles</h3>
+        <section class="summary-grid" aria-label="Resumen de resultados filtrados">
+            <article class="summary-card">
+                <h2>Filas visibles</h2>
                 <p id="summaryRows">0</p>
-            </div>
-            <div class="summary-card">
-                <h3>Éxito medio</h3>
+            </article>
+            <article class="summary-card">
+                <h2>Éxito medio</h2>
                 <p id="summarySuccess">0%</p>
-            </div>
-            <div class="summary-card">
-                <h3>Fallo medio</h3>
+            </article>
+            <article class="summary-card">
+                <h2>Fallo medio</h2>
                 <p id="summaryFailure">0%</p>
-            </div>
-            <div class="summary-card">
-                <h3>Rango consultado</h3>
+            </article>
+            <article class="summary-card">
+                <h2>Rango consultado</h2>
                 <p id="summaryRange">—</p>
-            </div>
+            </article>
         </section>
 
-        <section class="panel">
+        <section class="panel" aria-label="Leyenda de tramos">
             <div class="legend">
                 <span><i class="dot muy-facil"></i> Muy fácil</span>
                 <span><i class="dot facil"></i> Fácil</span>
@@ -491,22 +544,23 @@
             </div>
         </section>
 
-        <section class="panel">
-            <div id="statusMessage" class="status-message">
+        <section class="panel" aria-label="Tabla estadística">
+            <div id="statusMessage" class="status-message" role="status" aria-live="polite">
                 Cargando datos estadísticos...
             </div>
 
-            <div class="table-wrapper" id="tableWrapper" style="display:none;">
+            <div class="table-wrapper" id="tableWrapper" style="display: none;">
                 <table id="statsTable">
+                    <caption class="sr-only">Resultados estadísticos filtrados por dificultad, dados y bonificador.</caption>
                     <thead>
                         <tr>
-                            <th data-sort="dificultad">Dificultad</th>
-                            <th data-sort="tramo">Tramo</th>
-                            <th data-sort="dados">Dados</th>
-                            <th data-sort="bonificador">Bonificador</th>
-                            <th data-sort="exito">Éxito %</th>
-                            <th data-sort="fallo">Fallo %</th>
-                            <th data-sort="interpretacion">Interpretación</th>
+                            <th scope="col" aria-sort="ascending"><button class="sort-button" type="button" data-sort="dificultad">Dificultad</button></th>
+                            <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="tramo">Tramo</button></th>
+                            <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="dados">Dados</button></th>
+                            <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="bonificador">Bonificador</button></th>
+                            <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="exito">Éxito %</button></th>
+                            <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="fallo">Fallo %</button></th>
+                            <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="interpretacion">Interpretación</button></th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -514,9 +568,9 @@
             </div>
         </section>
 
-        <section class="panel button-row">
-            <button class="button" id="resetFilters">Restablecer filtros</button>
-            <button class="button" id="exportCSV">Exportar vista CSV</button>
+        <section class="panel button-row" aria-label="Acciones de tabla">
+            <button class="button" id="resetFilters" type="button">Restablecer filtros</button>
+            <button class="button" id="exportCSV" type="button">Exportar vista en CSV</button>
         </section>
     </main>
 
@@ -525,68 +579,87 @@
     </footer>
 
     <script>
-        document.getElementById('toggleTheme').addEventListener('click', () => {
-            document.body.classList.toggle('light');
-            const isLight = document.body.classList.contains('light');
-            document.getElementById('toggleTheme').textContent = isLight ? 'Modo Oscuro' : 'Modo Claro';
-        });
+        const botonTema = document.getElementById("toggleTheme");
+        const tbody = document.querySelector("#statsTable tbody");
+        const statusMessage = document.getElementById("statusMessage");
+        const tableWrapper = document.getElementById("tableWrapper");
+        const searchInput = document.getElementById("searchInput");
+        const filterDificultad = document.getElementById("filterDificultad");
+        const filterTramo = document.getElementById("filterTramo");
+        const filterDados = document.getElementById("filterDados");
+        const filterBonificador = document.getElementById("filterBonificador");
+        const filterInterpretacion = document.getElementById("filterInterpretacion");
+        const summaryRows = document.getElementById("summaryRows");
+        const summarySuccess = document.getElementById("summarySuccess");
+        const summaryFailure = document.getElementById("summaryFailure");
+        const summaryRange = document.getElementById("summaryRange");
+        const resetFiltersButton = document.getElementById("resetFilters");
+        const exportCSVButton = document.getElementById("exportCSV");
+        const sortButtons = document.querySelectorAll(".sort-button");
+
+        const ordenTramo = {
+            "Muy fácil": 1,
+            "Fácil": 2,
+            "Media": 3,
+            "Desafiante": 4,
+            "Difícil": 5,
+            "Muy difícil": 6,
+            "Extrema": 7
+        };
+
+        const claseInterpretacion = {
+            "Muy favorable": "muy-favorable",
+            "Fiable": "fiable",
+            "Disputada": "disputada",
+            "Arriesgada": "arriesgada",
+            "Desesperada": "desesperada",
+            "Casi imposible": "casi-imposible"
+        };
 
         let allData = [];
         let filteredData = [];
-        let currentSort = { key: 'dificultad', direction: 'asc' };
+        let currentSort = { key: "dificultad", direction: "asc" };
 
-        const tbody = document.querySelector('#statsTable tbody');
-        const statusMessage = document.getElementById('statusMessage');
-        const tableWrapper = document.getElementById('tableWrapper');
+        function actualizarTextoTema() {
+            const temaClaro = document.body.classList.contains("light");
+            botonTema.textContent = temaClaro ? "Modo oscuro" : "Modo claro";
+            botonTema.setAttribute("aria-pressed", String(!temaClaro));
+        }
 
-        const searchInput = document.getElementById('searchInput');
-        const filterDificultad = document.getElementById('filterDificultad');
-        const filterTramo = document.getElementById('filterTramo');
-        const filterDados = document.getElementById('filterDados');
-        const filterBonificador = document.getElementById('filterBonificador');
-        const filterInterpretacion = document.getElementById('filterInterpretacion');
-
-        const summaryRows = document.getElementById('summaryRows');
-        const summarySuccess = document.getElementById('summarySuccess');
-        const summaryFailure = document.getElementById('summaryFailure');
-        const summaryRange = document.getElementById('summaryRange');
+        botonTema.addEventListener("click", () => {
+            document.body.classList.toggle("light");
+            actualizarTextoTema();
+        });
+        actualizarTextoTema();
 
         function getDifficultyClass(tramo) {
-            const map = {
-                'Muy fácil': 'muy-facil-row',
-                'Fácil': 'facil-row',
-                'Media': 'media-row',
-                'Desafiante': 'desafiante-row',
-                'Difícil': 'dificil-row',
-                'Muy difícil': 'muy-dificil-row',
-                'Extrema': 'extrema-row'
+            const mapa = {
+                "Muy fácil": "muy-facil-row",
+                "Fácil": "facil-row",
+                "Media": "media-row",
+                "Desafiante": "desafiante-row",
+                "Difícil": "dificil-row",
+                "Muy difícil": "muy-dificil-row",
+                "Extrema": "extrema-row"
             };
-            return map[tramo] || '';
+            return mapa[tramo] || "";
         }
 
         function getTagClass(tramo) {
-            const map = {
-                'Muy fácil': 'muy-facil',
-                'Fácil': 'facil',
-                'Media': 'media',
-                'Desafiante': 'desafiante',
-                'Difícil': 'dificil',
-                'Muy difícil': 'muy-dificil',
-                'Extrema': 'extrema'
+            const mapa = {
+                "Muy fácil": "muy-facil",
+                "Fácil": "facil",
+                "Media": "media",
+                "Desafiante": "desafiante",
+                "Difícil": "dificil",
+                "Muy difícil": "muy-dificil",
+                "Extrema": "extrema"
             };
-            return map[tramo] || '';
+            return mapa[tramo] || "";
         }
 
-        function getInterpretacionStyle(texto) {
-            const styles = {
-                'Muy favorable': 'background: rgba(46,139,87,0.22);',
-                'Fiable': 'background: rgba(0,191,255,0.22);',
-                'Disputada': 'background: rgba(255,179,0,0.22);',
-                'Arriesgada': 'background: rgba(251,140,0,0.22);',
-                'Desesperada': 'background: rgba(229,57,53,0.22);',
-                'Casi imposible': 'background: rgba(142,36,170,0.22);'
-            };
-            return styles[texto] || '';
+        function getInterpretationClass(texto) {
+            return claseInterpretacion[texto] || "";
         }
 
         function formatPercent(value) {
@@ -594,40 +667,40 @@
         }
 
         function fillDynamicFilters(data) {
-            const dificultades = [...new Set(data.map(row => row.dificultad))].sort((a, b) => a - b);
-            const bonificadores = [...new Set(data.map(row => row.bonificador))].sort((a, b) => a - b);
+            const dificultades = [...new Set(data.map((fila) => fila.dificultad))].sort((a, b) => a - b);
+            const bonificadores = [...new Set(data.map((fila) => fila.bonificador))].sort((a, b) => a - b);
 
-            dificultades.forEach(d => {
-                const option = document.createElement('option');
-                option.value = d;
-                option.textContent = d;
+            dificultades.forEach((dificultad) => {
+                const option = document.createElement("option");
+                option.value = dificultad;
+                option.textContent = dificultad;
                 filterDificultad.appendChild(option);
             });
 
-            bonificadores.forEach(b => {
-                const option = document.createElement('option');
-                option.value = b;
-                option.textContent = b >= 0 ? `+${b}` : `${b}`;
+            bonificadores.forEach((bonificador) => {
+                const option = document.createElement("option");
+                option.value = bonificador;
+                option.textContent = bonificador >= 0 ? `+${bonificador}` : `${bonificador}`;
                 filterBonificador.appendChild(option);
             });
         }
 
         function renderTable(data) {
-            tbody.innerHTML = '';
+            tbody.innerHTML = "";
 
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.className = getDifficultyClass(row.tramo);
+            data.forEach((fila) => {
+                const tr = document.createElement("tr");
+                tr.className = getDifficultyClass(fila.tramo);
 
                 tr.innerHTML = `
-          <td>${row.dificultad}</td>
-          <td><span class="tag ${getTagClass(row.tramo)}">${row.tramo}</span></td>
-          <td>${row.dados}</td>
-          <td>${row.bonificador >= 0 ? '+' + row.bonificador : row.bonificador}</td>
-          <td>${formatPercent(row.exito)}</td>
-          <td>${formatPercent(row.fallo)}</td>
-          <td><span class="interp" style="${getInterpretacionStyle(row.interpretacion)}">${row.interpretacion}</span></td>
-        `;
+                    <td>${fila.dificultad}</td>
+                    <td><span class="tag ${getTagClass(fila.tramo)}">${fila.tramo}</span></td>
+                    <td>${fila.dados}</td>
+                    <td>${fila.bonificador >= 0 ? `+${fila.bonificador}` : fila.bonificador}</td>
+                    <td>${formatPercent(fila.exito)}</td>
+                    <td>${formatPercent(fila.fallo)}</td>
+                    <td><span class="interp ${getInterpretationClass(fila.interpretacion)}">${fila.interpretacion}</span></td>
+                `;
 
                 tbody.appendChild(tr);
             });
@@ -638,22 +711,50 @@
         function updateSummary(data) {
             summaryRows.textContent = data.length;
 
-            if (data.length === 0) {
-                summarySuccess.textContent = '0%';
-                summaryFailure.textContent = '0%';
-                summaryRange.textContent = '—';
+            if (!data.length) {
+                summarySuccess.textContent = "0%";
+                summaryFailure.textContent = "0%";
+                summaryRange.textContent = "—";
                 return;
             }
 
             const avgSuccess = data.reduce((acc, row) => acc + Number(row.exito), 0) / data.length;
             const avgFailure = data.reduce((acc, row) => acc + Number(row.fallo), 0) / data.length;
-            const difs = data.map(row => Number(row.dificultad));
-            const minDiff = Math.min(...difs);
-            const maxDiff = Math.max(...difs);
+            const dificultades = data.map((row) => Number(row.dificultad));
+            const minima = Math.min(...dificultades);
+            const maxima = Math.max(...dificultades);
 
             summarySuccess.textContent = formatPercent(avgSuccess);
             summaryFailure.textContent = formatPercent(avgFailure);
-            summaryRange.textContent = minDiff === maxDiff ? `${minDiff}` : `${minDiff}–${maxDiff}`;
+            summaryRange.textContent = minima === maxima ? `${minima}` : `${minima}–${maxima}`;
+        }
+
+        function normalizarValorOrden(key, value) {
+            if (key === "dados") {
+                return parseInt(String(value).replace("D", ""), 10);
+            }
+            if (key === "tramo") {
+                return ordenTramo[value] || 999;
+            }
+            if (typeof value === "string") {
+                return value.toLowerCase();
+            }
+            return value;
+        }
+
+        function sortData() {
+            filteredData.sort((a, b) => {
+                const valorA = normalizarValorOrden(currentSort.key, a[currentSort.key]);
+                const valorB = normalizarValorOrden(currentSort.key, b[currentSort.key]);
+
+                if (valorA < valorB) {
+                    return currentSort.direction === "asc" ? -1 : 1;
+                }
+                if (valorA > valorB) {
+                    return currentSort.direction === "asc" ? 1 : -1;
+                }
+                return 0;
+            });
         }
 
         function applyFilters() {
@@ -664,143 +765,161 @@
             const bonificador = filterBonificador.value;
             const interpretacion = filterInterpretacion.value;
 
-            filteredData = allData.filter(row => {
-                const bonificadorTexto = row.bonificador >= 0
-                    ? `+${row.bonificador}`
-                    : `${row.bonificador}`;
-
-                const haystack = [
-                    row.dificultad,
-                    row.tramo,
-                    row.dados,
-                    row.bonificador,
+            filteredData = allData.filter((fila) => {
+                const bonificadorTexto = fila.bonificador >= 0 ? `+${fila.bonificador}` : `${fila.bonificador}`;
+                const contenido = [
+                    fila.dificultad,
+                    fila.tramo,
+                    fila.dados,
+                    fila.bonificador,
                     bonificadorTexto,
-                    row.exito,
-                    row.fallo,
-                    row.interpretacion
-                ].join(' ').toLowerCase();
+                    fila.exito,
+                    fila.fallo,
+                    fila.interpretacion
+                ].join(" ").toLowerCase();
 
+                const coincideBusqueda = !search || contenido.includes(search);
+                const coincideDificultad = !dificultad || String(fila.dificultad) === dificultad;
+                const coincideTramo = !tramo || fila.tramo === tramo;
+                const coincideDados = !dados || fila.dados === dados;
+                const coincideBonificador = !bonificador || String(fila.bonificador) === bonificador;
+                const coincideInterpretacion = !interpretacion || fila.interpretacion === interpretacion;
 
-
-                const matchesSearch = !search || haystack.includes(search);
-                const matchesDificultad = !dificultad || String(row.dificultad) === dificultad;
-                const matchesTramo = !tramo || row.tramo === tramo;
-                const matchesDados = !dados || row.dados === dados;
-                const matchesBonificador = !bonificador || String(row.bonificador) === bonificador;
-                const matchesInterpretacion = !interpretacion || row.interpretacion === interpretacion;
-
-                return matchesSearch && matchesDificultad && matchesTramo && matchesDados && matchesBonificador && matchesInterpretacion;
+                return (
+                    coincideBusqueda &&
+                    coincideDificultad &&
+                    coincideTramo &&
+                    coincideDados &&
+                    coincideBonificador &&
+                    coincideInterpretacion
+                );
             });
 
             sortData();
             renderTable(filteredData);
         }
 
-        function sortData() {
-            filteredData.sort((a, b) => {
-                let v1 = a[currentSort.key];
-                let v2 = b[currentSort.key];
-
-                if (currentSort.key === 'dados') {
-                    v1 = parseInt(String(v1).replace('D', ''), 10);
-                    v2 = parseInt(String(v2).replace('D', ''), 10);
+        function actualizarIndicadoresOrden() {
+            document.querySelectorAll("#statsTable thead th").forEach((th) => {
+                const button = th.querySelector(".sort-button");
+                if (!button) {
+                    return;
                 }
-
-                if (typeof v1 === 'string') v1 = v1.toLowerCase();
-                if (typeof v2 === 'string') v2 = v2.toLowerCase();
-
-                if (v1 < v2) return currentSort.direction === 'asc' ? -1 : 1;
-                if (v1 > v2) return currentSort.direction === 'asc' ? 1 : -1;
-                return 0;
+                const key = button.dataset.sort;
+                if (key === currentSort.key) {
+                    th.setAttribute("aria-sort", currentSort.direction === "asc" ? "ascending" : "descending");
+                } else {
+                    th.setAttribute("aria-sort", "none");
+                }
             });
         }
 
         function attachSorting() {
-            document.querySelectorAll('#statsTable thead th').forEach(th => {
-                th.style.cursor = 'pointer';
-                th.addEventListener('click', () => {
-                    const key = th.dataset.sort;
-                    if (!key) return;
+            sortButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    const key = button.dataset.sort;
+                    if (!key) {
+                        return;
+                    }
 
                     if (currentSort.key === key) {
-                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                        currentSort.direction = currentSort.direction === "asc" ? "desc" : "asc";
                     } else {
                         currentSort.key = key;
-                        currentSort.direction = 'asc';
+                        currentSort.direction = "asc";
                     }
 
                     sortData();
+                    actualizarIndicadoresOrden();
                     renderTable(filteredData);
                 });
             });
         }
 
-        function exportCurrentViewToCSV() {
-            if (!filteredData.length) return;
+        function escaparCsv(valor) {
+            const texto = String(valor);
+            if (!texto.includes(";") && !texto.includes("\"") && !texto.includes("\n")) {
+                return texto;
+            }
+            return `"${texto.replaceAll("\"", "\"\"")}"`;
+        }
 
-            const headers = ['Dificultad', 'Tramo', 'Dados', 'Bonificador', 'Exito', 'Fallo', 'Interpretacion'];
-            const rows = filteredData.map(row => [
-                row.dificultad,
-                row.tramo,
-                row.dados,
-                row.bonificador,
-                Number(row.exito).toFixed(2),
-                Number(row.fallo).toFixed(2),
-                row.interpretacion
+        function exportCurrentViewToCSV() {
+            if (!filteredData.length) {
+                statusMessage.style.display = "block";
+                statusMessage.textContent = "No hay filas visibles para exportar.";
+                return;
+            }
+
+            const headers = ["Dificultad", "Tramo", "Dados", "Bonificador", "Éxito", "Fallo", "Interpretación"];
+            const rows = filteredData.map((fila) => [
+                fila.dificultad,
+                fila.tramo,
+                fila.dados,
+                fila.bonificador,
+                Number(fila.exito).toFixed(2),
+                Number(fila.fallo).toFixed(2),
+                fila.interpretacion
             ]);
 
-            const csvContent = [headers, ...rows].map(r => r.join(';')).join('\n');
+            const csv = [headers, ...rows]
+                .map((row) => row.map((cell) => escaparCsv(cell)).join(";"))
+                .join("\n");
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8;" });
             const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
+            const link = document.createElement("a");
             link.href = url;
-            link.download = 'estadisticas_filtradas.csv';
+            link.download = "estadisticas_filtradas.csv";
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             URL.revokeObjectURL(url);
         }
 
         async function loadData() {
             try {
-                const response = await fetch('datos_estadisticos.json');
-                if (!response.ok) throw new Error('No se pudo cargar datos_estadisticos.json');
+                const response = await fetch("datos_estadisticos.json");
+                if (!response.ok) {
+                    throw new Error("No se pudo cargar datos_estadisticos.json");
+                }
 
-                const data = await response.json();
-                allData = data;
+                allData = await response.json();
                 filteredData = [...allData];
 
                 fillDynamicFilters(allData);
                 sortData();
+                actualizarIndicadoresOrden();
                 renderTable(filteredData);
 
-                statusMessage.style.display = 'none';
-                tableWrapper.style.display = 'block';
+                statusMessage.style.display = "none";
+                tableWrapper.style.display = "block";
             } catch (error) {
                 statusMessage.innerHTML = `
-          No se ha podido cargar <strong>datos_estadisticos.json</strong>.<br>
-          Coloca este archivo en la misma carpeta que <strong>estadisticas.html</strong>.
-        `;
+                    No se ha podido cargar <strong>datos_estadisticos.json</strong>.<br>
+                    Verifica que el archivo esté en la misma carpeta que <strong>estadisticas.html</strong>.
+                `;
             }
         }
 
-        searchInput.addEventListener('input', applyFilters);
-        filterDificultad.addEventListener('change', applyFilters);
-        filterTramo.addEventListener('change', applyFilters);
-        filterDados.addEventListener('change', applyFilters);
-        filterBonificador.addEventListener('change', applyFilters);
-        filterInterpretacion.addEventListener('change', applyFilters);
+        searchInput.addEventListener("input", applyFilters);
+        filterDificultad.addEventListener("change", applyFilters);
+        filterTramo.addEventListener("change", applyFilters);
+        filterDados.addEventListener("change", applyFilters);
+        filterBonificador.addEventListener("change", applyFilters);
+        filterInterpretacion.addEventListener("change", applyFilters);
 
-        document.getElementById('resetFilters').addEventListener('click', () => {
-            searchInput.value = '';
-            filterDificultad.value = '';
-            filterTramo.value = '';
-            filterDados.value = '';
-            filterBonificador.value = '';
-            filterInterpretacion.value = '';
+        resetFiltersButton.addEventListener("click", () => {
+            searchInput.value = "";
+            filterDificultad.value = "";
+            filterTramo.value = "";
+            filterDados.value = "";
+            filterBonificador.value = "";
+            filterInterpretacion.value = "";
             applyFilters();
         });
 
-        document.getElementById('exportCSV').addEventListener('click', exportCurrentViewToCSV);
+        exportCSVButton.addEventListener("click", exportCurrentViewToCSV);
 
         attachSorting();
         loadData();
